@@ -1,2 +1,2 @@
-print(", ".join("{:02d}".format(i) for i in range(100)))
-
+#!/usr/bin/env python3
+print(", ".join(f"{i:02d}" for i in range(100)))
