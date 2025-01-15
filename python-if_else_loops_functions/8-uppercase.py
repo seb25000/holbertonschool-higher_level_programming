@@ -1,21 +1,14 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 def uppercase(str):
-    """Converts a string to uppercase."""
     result = ""
     for char in str:
-        if 'a' <= char <= 'z':
-            uppercase_char = chr(ord(char) - 32)  # Convert lowercase to uppercase
+        if ord('a') <= ord(char) <= ord('z'):
+            result += chr(ord(char) - 32)
         else:
-            uppercase_char = char  # Keep non-lowercase chars unchanged
-        result += uppercase_char
+            result += char
     print("{}".format(result))
+#!/usr/bin/env python3
 
-
-if __name__ == "__main__":
-    # Example usage
-    uppercase("hello world")  # Output: HELLO WORLD
-    uppercase("python is fun")  # Output: PYTHON IS FUN
-    uppercase("123abcDEF!")     # Output: 123ABCDEF!
-    uppercase("This Is Mixed")   # Output: THIS IS MIXED
-    uppercase("") #Output:
+uppercase("best")
+uppercase("Best School 98 Battery street")
