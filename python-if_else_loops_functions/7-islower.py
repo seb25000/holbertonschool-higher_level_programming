@@ -1,6 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+
 
 def islower(c):
+
     """Checks if a character is lowercase.
 
     Args:
@@ -15,7 +17,9 @@ def islower(c):
     else:
         return False
 
+
 islower = __import__('7-islower').islower
+
 
 print("a is {}".format("lower" if islower("a") else "upper"))
 print("H is {}".format("lower" if islower("H") else "upper"))
