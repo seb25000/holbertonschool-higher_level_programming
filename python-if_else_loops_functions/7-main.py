@@ -1,22 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
-def islower(c):
 
-    """Checks if a character is lowercase.
-
-    Args:
-        c: The character to check.
-
-    Returns:
-        True if c is lowercase, False otherwise.
-    """
-    ascii_val = ord(c)
-    if 97 <= ascii_val <= 122:
-        return True
-    else:
-        return False
-
-    islower = __import__('7-islower').islower
+islower = __import__('7-islower').islower
 
 
 print("a is {}".format("lower" if islower("a") else "upper"))
