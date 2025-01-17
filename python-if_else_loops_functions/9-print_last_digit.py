@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 def print_last_digit(number):
     """Prints the last digit of a number and returns it."""
@@ -13,3 +13,4 @@ if __name__ == '__main__':
     print_last_digit(0)
     r = print_last_digit(-1024)
     print(r)
+    
