@@ -1,19 +1,19 @@
 #!/usr/bin/python3
 
 import calculator_1
+
 if __name__ == "__main__":
-
-
     a = 10
     b = 5
 
-    add_result = calculator_1.add(a, b)
-    sub_result = calculator_1.sub(a, b)
-    mul_result = calculator_1.mul(a, b)
-    div_result = calculator_1.div(a, b)
+    # Use the imported functions with 'a' and 'b'
+    result_add = calculator_1.add(a, b)
+    result_sub = calculator_1.sub(a, b)
+    result_mul = calculator_1.mul(a, b)
+    result_div = calculator_1.div(a, b)
 
-
-    print("a + b = {}".format(add_result))
-    print("a - b = {}".format(sub_result))
-    print("a * b = {}".format(mul_result))
-    print("a / b = {}".format(div_result))
+    # Display results (print statements are limited to 4)
+    print(f"{a} + {b} = {result_add}")
+    print(f"{a} - {b} = {result_sub}")
+    print(f"{a} * {b} = {result_mul}")
+    print(f"{a} / {b} = {result_div}")
