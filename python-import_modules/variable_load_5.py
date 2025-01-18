@@ -1,4 +1,5 @@
 #!/usr/bin/python3
 
-# variable_load_5.py
-a = 98 
+a = 98
+"""Simple variable
+""" 
