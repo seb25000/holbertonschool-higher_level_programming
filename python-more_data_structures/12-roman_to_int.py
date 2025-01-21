@@ -22,7 +22,8 @@ def roman_to_int(roman_string):
         # Get the current numeral value
         current_value = roman_map.get(roman_string[i], 0)
 
-        # If not the last numeral and the next numeral is larger, subtract current value
+        # If not the last numeral and the next numeral is larger,
+        # subtract current value
         if i + 1 < length:
             next_value = roman_map.get(roman_string[i + 1], 0)
             if current_value < next_value:
