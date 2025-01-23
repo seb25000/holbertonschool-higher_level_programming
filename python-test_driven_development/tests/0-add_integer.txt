@@ -1,80 +1,123 @@
-===========================
-How to Use 0-add_integer.py
-===========================
+============================
+doctest for 0-add_integer.py
+============================
+``add_integer()`` returns the sum of its arguments
 
-This module defines an integer addition function ``add_integer(a, b=98)``.
+SUCCESSFUL TEST CONDITIONS
+==========================
 
-Usage
-=====
-
-``add_integer(...)``` returns the addition of its two arguments. For numbers,
-that value is equivalent to using the ``+`` operator.
-
+testing addition of two integers, both single digit
 ::
 
-    >>> add_integer = __import__('0-add_integer').add_integer
-    >>> add_integer(1, 2)
-    3
-    ::
->>> add_integer(100, -2)
-    98
+>>> add_integer = __import__('0-add_integer').add_integer
+>>> add_integer(1, 2)
+3
 
-The function also works with floating-point values.
+testing addition of two integers, both multiple digits
 ::
-    >>> add_integer(2.0, 3.0)
-    5
+>>> add_integer(99999, 87654321)
+87754320
 
-Note that floats are casted to ints before addition is performed.
+testing addition of two negative integers
 ::
-    >>> add_integer(2.9, 0.2)
-    2
-::
-    >>> add_integer(-2.9, -0.2)
-    -2
+>>> add_integer(-2, -3)
+-5
 
-Floating and non-floating point values can be combined.
+testing addition of one positive, one negative integers
 ::
-    >>> add_integer(2.3, -3)
-    -1
+>>> add_integer(-1, 5)
+4
 
-The second argument is optional - by default, it is 98.
+testing addition of 1 integer and default value of 2nd int (98)
 ::
-    >>> add_integer(2)
-    100
+>>> add_integer(2)
+100
 
-Non-Numbers
-==========
+testing addition of two floats
+::
+>>> add_integer(5.61, 2.3)
+7
 
-``add_integer()`` expects that both arguments are either integers or floats.
-If either argument is a non-integer and non-float, a TypeError is raised:
+testing addition of 1 int, 1 float
 ::
-    >>> add_integer("hello", 3)
-    Traceback (most recent call last):
-    TypeError: a must be an integer::
-    >>> add_integer(2, "hello")
-    Traceback (most recent call last):
-    TypeError: b must be an integer
-::
-    >>> add_integer(None)
-    Traceback (most recent call last):
-    TypeError: a must be an integer::
-    >>> add_integer(2.3, None)
-    Traceback (most recent call last):
-    TypeError: b must be an integer
+>>> add_integer(9, 1.9247)
+10
 
-Float Overflow
-=============
+testing addition of 1 float and default value of 2nd int (98)
+::
+>>> add_integer(27.1234)
+125
 
-The function should handle float overflow cases:
+testing addition of large integer (2**32) and int
 ::
-    >>> add_integer(float('inf'))
-    Traceback (most recent call last):
-    OverflowError: float overflow
+>>> add_integer(4294967296, 1)
+4294967297
+
+testing addition of two large integers (2**32)
 ::
-    >>> add_integer(float('inf'), float('-inf'))
-    Traceback (most recent call last):
-    OverflowError: float overflow
+>>> add_integer(4294967296, 4294967296)
+8589934592
+
+
+TEST CONDITIONS WHERE AN ERROR IS RAISED
+========================================
+
+testing addition of single infinity and default value of 2nd int (98)
 ::
-    >>> add_integer(float('nan'))
-    Traceback (most recent call last):
-    OverflowError: float overflow
+>>> add_integer(float('inf'))
+Traceback (most recent call last):
+OverflowError: cannot convert float infinity to integer
+
+testing how add_integer function handles no arguments
+::
+>>> add_integer()
+Traceback (most recent call last):
+TypeError: add_integer() missing 1 required positional argument: 'a'
+
+testing how add_integer function handles None argument
+::
+>>> add_integer(None)
+Traceback (most recent call last):
+TypeError: a must be an integer
+
+testing how add_integer function handles more than 2 arguments
+::
+>>> add_integer(1, 2, 3)
+Traceback (most recent call last):
+TypeError: add_integer() takes from 1 to 2 positional arguments but 3 were given
+
+testing how add_integer function handles 1st argument not of type int or float
+::
+>>> add_integer("9", 1)
+Traceback (most recent call last):
+TypeError: a must be an integer
+
+testing how add_integer function handles 2nd argument not of type int or float
+::
+>>> add_integer(7, "8")
+Traceback (most recent call last):
+TypeError: b must be an integer
+
+testing how add_integer function handles both arguments not of type int or float
+::
+>>> add_integer("5", "3")
+Traceback (most recent call last):
+TypeError: a must be an integer
+
+testing how add_integer function handles if 1 argument is boolean
+::
+>>> add_integer(True, 1)
+Traceback (most recent call last):
+TypeError: a must be an integer
+
+testing how add_integer function handles if 1 argument is list
+::
+>>> add_integer([6], 1)
+Traceback (most recent call last):
+TypeError: a must be an integer
+
+testing how add_integer function handles float NaN argument
+::
+>>> add_integer(float("NaN"), 1)
+Traceback (most recent call last):
+ValueError: cannot convert float NaN to integer
