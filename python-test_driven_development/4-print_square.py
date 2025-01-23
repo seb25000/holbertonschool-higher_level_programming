@@ -11,4 +11,3 @@ def print_square(size):
     for row in range(size):
         print("#"*size, end="")
         print()
-
