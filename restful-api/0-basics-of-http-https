@@ -1,0 +1,154 @@
+1. Differentiating HTTP and HTTPS:
+---------------------------------
+
+	HTTP (Hypertext Transfer Protocol):
+
+		Description: Web transfert protocol
+
+		Security: Transmits data in clear
+
+		Port: Typically use : 80
+
+		Use Cases: Essential for web transfert
+
+	HTTPS (Hypertext Transfer Protocol Secure):
+
+		Description: A secur transfert (with secure shell), MD5, or mode hachage
+
+		Security: Encrypts the data (hach method)
+
+		Port: Typically use 443
+
+		Use Cases: Essential for any web
+
+Summary of Differences:
+
+	Feature		:	HTTP			HTTPS
+--------------------------------------------------------------------
+	Security	:	Insecured		secured
+	Data Privacy	:       Vulnerable		invulnerable
+	Port		:	80			443
+	Certificate	:	No Certificate Needed	Requires SSL/TLS certificate
+	SEO	Not Fav	Favored by Search Engines
+	URL		:	http://			https://
+
+
+
+2. Understanding HTTP Structure :
+--------------------------------
+
+A. HTTP Request Structure :
+
+[HTTP Method] [Path] HTTP/[Version]
+[Header 1]: [Value 1]
+[Header 2]: [Value 2]
+...
+[Empty Line]
+[Message Body (Optional)]
+
+
+
+HTTP Method: (e.g., GET, POST, PUT, DELE)
+
+Path: (e/, /abo/about, /products/123)
+
+HTTP Version: (e.g., `HTHTTP/1.1, `HTTP/2HTTP/2) - The version of the HTTP pro
+
+Headers: (e.g., Host:Host: example.com, `User-Agent: Mozilla/5.0, ConteContent-Type: application/json)
+
+Empty Line: Separates the headers from the message
+
+Message Body (Optional): Contains data being sent to destinate
+
+
+
+
+Example HTTP Request :
+
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Connection: keep-alive
+
+
+
+B. HTTP Response Structure :
+
+HTTP/[Version] [Status Code] [Status Text]
+[Header 1]: [Value 1]
+[Header 2]: [Value 2]
+...
+[Empty Line]
+[Message Body (Optional)]
+
+
+
+HTTP Version: (e.g., `HHTTP/1.1, HTTP/2) - The version of the HTTP protocole
+
+Status Code: (e.g., 200)
+
+Status Text: (e.g., "...")
+
+Headers: (e.g., Content-Type: text/html, `ContenContent-Length: 1234, `Date: TuDate: Tue, 20 Jul 2023 12:00:00 GMT) - Provide additional id
+
+Empty Line: Separates the headers from the message body.
+
+Message Body (Optional): Contains the data being sent to destinate
+
+
+
+Example HTTP Response :
+
+HTTP/1.1 200 OK
+Date: Tue, 20 Jul 2023 12:00:00 GMT
+Server: Apache/2.4.41 (Unix)
+Content-Type: text/html
+Content-Length: 612
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example Website</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>
+
+
+3. Exploring HTTP Methods and Status Codes:
+
+A. Common HTTP Methods:
+
+Method		Description							Use Case
+GET		Retrieves data from the server					Features of data
+POST		Submits data to the server to					Submit data
+PUT		Replaces an existing resource					Updating an entire resource
+DELETE		Deletes 							Deleting a blog post, removing a user account.
+PATCH		Applies partial modifications to a resource			Updating spec
+HEAD		Similar to GET, but only retrieves				Checking head
+OPTIONS		Data								Used to determine what methods are used
+
+
+
+B. Common HTTP Status Codes:
+
+Status Code				Description					Scenario
+200 OK					Success						The message is agree
+301 Moved Permanently			Redirection					The redirection
+400 Bad Request				Client Error					The server could not understanding
+401 Unauthorized			Client Error					The request request
+403 Forbidden				Client Error					The server understanding
+404 Not Found				Client Error					The requested refused
+500 Internal Server Error		Server Error					A generic error occurred on the server. Often
+503 Service Unavailable			Server Error					The server is temRetry-After header may be included.
+
+
+
+
+
+
+
+
