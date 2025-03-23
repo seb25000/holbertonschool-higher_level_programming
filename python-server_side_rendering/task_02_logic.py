@@ -1,37 +1,25 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
 import json
-import os
 
 app = Flask(__name__)
 
-
 @app.route('/')
-def home():
-    return render_template('index.html')
-
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
+def index():
+    """Renders the 0-index.html template."""
+    return render_template('0-index.html')
 
 @app.route('/items')
 def items():
+    """Renders the items.html template with items from items.json."""
     try:
-        with open('items.json') as f:
+        with open('items.json', 'r') as f:
             data = json.load(f)
-        items = data.get('items', [])
-        return render_template('items.html', items=items)
+            items = data.get('items', [])  # Get the items list, default to empty list if not found
     except FileNotFoundError:
-        return "Items file not found", 404
-    except json.JSONDecodeError:
-        return "Error decoding JSON", 500
+        items = []  # If the file doesn't exist, treat it as an empty list.
+    
+    return render_template('items.html', items=items)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

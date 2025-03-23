@@ -1,3 +1,4 @@
-id,name,category,price
-1,Laptop,Electronics,799.99
-2,Coffee Mug,Home Goods,15.99
+[
+  {"id": 1, "name": "Laptop", "price": 799.99, "category": "Electronics"},
+  {"id": 2, "name": "Coffee Mug", "price": 15.99, "category": "Home Goods"}
+]
