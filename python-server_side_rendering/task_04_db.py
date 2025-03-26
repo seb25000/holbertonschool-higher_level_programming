@@ -1,103 +1,109 @@
-from flask import Flask, render_template, request, jsonify
-import csv
+from flask import Flask, render_template, request
 import sqlite3
 import json
-
+import csv
 import os
 
 app = Flask(__name__)
 
-def read_csv_data(filename):
-    """Reads data from a CSV file and returns it as a list of dictionaries."""
-    data = []
-    with open(filename, 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            data.append(row)
-    return data
-
-def read_json_data(filename):
-    """Reads data from a JSON file and returns it as a list of dictionaries."""
-    try:
-        with open(filename, 'r') as jsonfile:
-            data = json.load(jsonfile)
-        return data
-    except FileNotFoundError:
-        return []  # Handle the case where the file doesn't exist
-    except json.JSONDecodeError:
-        return []  # Handle the case where the JSON is invalid
-
-def read_sql_data(db_name):
-    """Reads data from a SQLite database and returns it as a list of dictionaries."""
-    try:
-        conn = sqlite3.connect(db_name)
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM Products")
-        rows = cursor.fetchall()
-        conn.close()
-
-        # Convert rows to a list of dictionaries
-        data = []
-        for row in rows:
-            data.append({
-                'id': row[0],
-                'name': row[1],
-                'category': row[2],
-                'price': row[3]
-            })
-        return data
-    except sqlite3.Error as e:
-        print(f"Database error: {e}")
-        return None  # Or raise the exception if you prefer
-
-
 @app.route('/')
-def display_products():
-    """Displays product data based on the source query parameter."""
-    source = request.args.get('source', 'json')  # Default to JSON if no source is provided
+def home():
+    return render_template('index.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+
+@app.route('/items')
+def items():
+    try:
+        with open('items.json') as f:
+            data = json.load(f)
+        items = data.get('items', [])
+        return render_template('items.html', items=items)
+    except FileNotFoundError:
+        return "Items file not found", 404
+    except json.JSONDecodeError:
+        return "Error decoding JSON", 500
+
+
+def read_json(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
+
+def read_csv(file_path):
+    products = []
+    with open(file_path, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            row['id'] = int(row['id'])
+            row['price'] = float(row['price'])
+            products.append(row)
+    return products
+
+
+def fetch_data_from_sqlite():
+    conn = sqlite3.connect('products.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Products')
+    rows = cursor.fetchall()
+    conn.close()
+
+    products = []
+    for row in rows:
+        product = {
+            'id': row[0],
+            'name': row[1],
+            'category': row[2],
+            'price': row[3]
+        }
+        products.append(product)
+
+    print(products)
+    return products
+
+
+@app.route('/products')
+def products():
+    source = request.args.get('source')
+    product_id = request.args.get('id')
+    file_path = ''
 
     if source == 'json':
-        products = read_json_data('products.json')
-        if not products:  # Check for empty data (e.g., file not found, invalid JSON)
-            return render_template('error.html', message="JSON file not found or invalid.")
+        file_path = 'products.json'
     elif source == 'csv':
-        products = read_csv_data('products.csv')
-        if not products: # Check for empty data (e.g., file not found)
-            return render_template('error.html', message="CSV file not found or empty.")
+        file_path = 'products.csv'
     elif source == 'sql':
-        products = read_sql_data('products.db')
-        if products is None:  # Check for database error
-            return render_template('error.html', message="Database error occurred.")
-        if not products: # Check for empty data (e.g., no products in DB)
-            return render_template('error.html', message="No products found in the database.")
+        products = fetch_data_from_sqlite()
     else:
-        return render_template('error.html', message="Wrong source.")
+        return render_template('product_display.html', error="Wrong source")
+
+    if source != 'sql' and not os.path.exists(file_path):
+        return render_template('product_display.html', error="File not found")
+
+    if source == 'json':
+        products = read_json(file_path)
+    elif source == 'csv':
+        products = read_csv(file_path)
+
+    if product_id:
+        try:
+            product_id = int(product_id)
+            products = [p for p in products if p['id'] == product_id]
+            if not products:
+                return render_template('product_display.html', error="Product not found")
+        except ValueError:
+            return render_template('product_display.html', error="Invalid id")
 
     return render_template('product_display.html', products=products)
 
 if __name__ == '__main__':
-
-    #Create the database and populate it
-
-    def create_database():
-        conn = sqlite3.connect('products.db')
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS Products (
-                id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL,
-                category TEXT NOT NULL,
-                price REAL NOT NULL
-            )
-        ''')
-        cursor.execute('''
-            INSERT INTO Products (id, name, category, price)
-            VALUES
-            (1, 'Laptop', 'Electronics', 799.99),
-            (2, 'Coffee Mug', 'Home Goods', 15.99)
-        ''')
-        conn.commit()
-        conn.close()
-
-    create_database()
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
